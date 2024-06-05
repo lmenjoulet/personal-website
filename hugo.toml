@@ -1,4 +1,30 @@
 baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'xmin'
+languageCode = 'en-UK'
+title = "Loup Menjoulet's personal website" 
+
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = true 
+
+[module]
+[[module.imports]]
+#path = 'github.com/alex-shpak/hugo-book'
+path = 'github.com/AmazingRise/hugo-theme-diary'
+
+[languages]
+[languages.en]
+contentDir = "content/en"
+languageDirection = 'ltr'
+languageName = 'English'
+weight = 1
+
+[languages.fr]
+contentDir = "content/fr"
+languageDirection = 'ltr'
+languageName = 'Français'
+weight = 2
+
+[params]
+BookTheme = 'light'
+BookToC = true
+BookSection = 'docs'
+BookRepo = 'https://github.com/lmenjoulet/personal-website'
