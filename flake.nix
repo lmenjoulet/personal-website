@@ -13,7 +13,7 @@
         pkgs = import nixpkgs {inherit system;};
       in {
         devShell = pkgs.mkShell {
-          buildInputs = [pkgs.hugo];
+          buildInputs = [pkgs.nodejs];
         };
       }
     );
