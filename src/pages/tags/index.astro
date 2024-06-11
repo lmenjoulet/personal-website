@@ -22,10 +22,12 @@ console.log(uniqueTags)
   <head>
     <BaseHead title="Tags" description="List of all tags" />
     <style>
-    .tag-list: {
+    .tag-list {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
+      margin: 0;
+      padding: 1em 1em 0;
     }
     </style>
   </head>
@@ -33,7 +35,7 @@ console.log(uniqueTags)
     <Header />
     <ul class="tag-list">
       <li>
-{uniqueTags.map((tag) => <a href=`/tags/${tag}/`>{tag}</a>)}
+        {uniqueTags.map((tag) => <a href=`/tags/${tag}/`>#{tag}</a>)}
       </li>
     </ul>
     <Footer />

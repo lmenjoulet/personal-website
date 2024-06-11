@@ -2,14 +2,15 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import PostsList from "../../components/PostsList.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection('blog');
+  const allPosts = await getCollection("blog");
   const uniqueTags = [
     ...new Set(allPosts.map((post) => post.data.tags).flat()),
   ];
-  
+
   return uniqueTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) =>
       post.data.tags.includes(tag),
@@ -30,24 +31,24 @@ const { posts } = Astro.props;
   <head>
     <BaseHead title=`tags: ${tag}` description="list of tags" />
     <style>
-    .tag-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-    }
+      .topline {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em 1em 0;
+      }
+      .tag {
+        margin-left: 1em;
+        color: var(--accent);
+      }
     </style>
   </head>
   <body>
     <Header />
-    <h1>Posts tagged with {tag}</h1>
-    <ul class="tag-list">
-      <li>
-        {posts.map((post) => {
-        console.log(post)
-        return <a href=`/blog/${post.slug}`>{post.data.title}</a>
-        })}
-      </li>
-    </ul>
+    <nav class="topline">
+      <a href="/tags">back to tags</a>
+      <span class="tag">#{tag}</span>
+    </nav>
+    <PostsList posts={posts} />
     <Footer />
   </body>
 </html>
