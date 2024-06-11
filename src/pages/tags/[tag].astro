@@ -2,18 +2,19 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const allPosts = await Astro.glob("../../content/blog/*.md");
+  const allPosts = await getCollection('blog');
+  console.log(allPosts);
   const uniqueTags = [
-    ...new Set(allPosts.map((post) => post.frontmatter.tags).flat().filter(item => item)),
+    ...new Set(allPosts.map((post) => post.data.tags).flat()),
   ];
   
   return uniqueTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) =>
-      post.frontmatter.tags.includes(tag),
+      post.data.tags.includes(tag),
     );
-    console.log(filteredPosts)
     return {
       params: { tag },
       props: { posts: filteredPosts },
@@ -29,13 +30,23 @@ const { posts } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead title=`tags: ${tag}` description="list of tags" />
+    <style>
+    .tag-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    </style>
   </head>
   <body>
     <Header />
     <h1>Posts tagged with {tag}</h1>
-    <ul>
+    <ul class="tag-list">
       <li>
-        {posts.map((post) => <a href=`${post.url}`>{post.frontmatter.title}</a>)}
+        {posts.map((post) => {
+        console.log(post)
+        return <a href=`/blog/${post.slug}`>{post.data.title}</a>
+        })}
       </li>
     </ul>
     <Footer />

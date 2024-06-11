@@ -22,14 +22,16 @@ console.log(uniqueTags)
   <head>
     <BaseHead title="Tags" description="List of all tags" />
     <style>
-      ul {
+    .tag-list: {
       list-style: none;
-      }
+      display: flex;
+      flex-wrap: wrap;
+    }
     </style>
   </head>
   <body>
     <Header />
-    <ul>
+    <ul class="tag-list">
       <li>
 {uniqueTags.map((tag) => <a href=`/tags/${tag}/`>{tag}</a>)}
       </li>
