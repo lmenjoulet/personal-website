@@ -15,9 +15,19 @@ const posts = (await getCollection("blog")).sort(
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .topline {
+        display: flex;
+        justify-content: right;
+        padding: 1em 1em 0;
+      }
+    </style>
   </head>
   <body>
     <Header />
+    <nav class="topline">
+      <a href="/tags">browse by tag</a>
+    </nav>
     <PostsList posts={posts} />
     <Footer />
   </body>

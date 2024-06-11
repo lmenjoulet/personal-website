@@ -22,6 +22,10 @@ console.log(uniqueTags)
   <head>
     <BaseHead title="Tags" description="List of all tags" />
     <style>
+    .topline {
+      display: flex;
+      padding: 1em 1em 0;
+    }
     .tag-list {
       list-style: none;
       display: flex;
@@ -33,6 +37,9 @@ console.log(uniqueTags)
   </head>
   <body>
     <Header />
+    <nav class="topline">
+      <a href="/blog">back to main page</a>
+    </nav>
     <ul class="tag-list">
       <li>
         {uniqueTags.map((tag) => <a href=`/tags/${tag}/`>#{tag}</a>)}
