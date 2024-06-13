@@ -6,7 +6,7 @@ const { posts } = Astro.props;
 
 <main>
   <section>
-    <ul>
+    <ul class="posts-list">
       {
         posts.map((post) => (
           <li>
@@ -17,10 +17,22 @@ const { posts } = Astro.props;
                 src={post.data.heroImage}
                 alt=""
               />
-              <h4 class="title">{post.data.title}</h4>
-              <p class="date">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
+              <div class="below-image">
+                <div class="post-info">
+                  <h4 class="title">{post.data.title}</h4>
+                  <time class="date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </time>
+                </div>
+                <ul class="post-tags">
+                  { post.data.tags
+                    .slice(0,3)
+                      .map((tag: string, i: number, arr: string[]) => 
+                      <li>
+                        #{tag}{i==arr.length - 1 ? "...": ""}
+                      </li>)}
+                </ul>
+              </div>
             </a>
           </li>
         ))
@@ -33,7 +45,7 @@ const { posts } = Astro.props;
   main {
     width: 960px;
   }
-  ul {
+  .posts-list {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
@@ -41,29 +53,28 @@ const { posts } = Astro.props;
     margin: 0;
     padding: 0;
   }
-  ul li {
+  .posts-list>li {
     width: calc(50% - 1rem);
   }
-  ul li * {
+  .posts-list>li * {
     text-decoration: none;
     transition: 0.2s ease;
   }
-  ul li:first-child {
+  .posts-list>li:first-child {
     width: 100%;
     margin-bottom: 1rem;
-    text-align: center;
   }
-  ul li:first-child img {
+  .posts-list>li:first-child img {
     width: 100%;
   }
-  ul li:first-child .title {
+  .posts-list>li:first-child .title {
     font-size: 2.369rem;
   }
-  ul li img {
+  .posts-list>li img {
     margin-bottom: 0.5rem;
     border-radius: 12px;
   }
-  ul li a {
+  .posts-list>li a {
     display: block;
   }
   .title {
@@ -75,25 +86,52 @@ const { posts } = Astro.props;
     margin: 0;
     color: rgb(var(--gray));
   }
-  ul li a:hover h4,
-  ul li a:hover .date {
+  .below-image {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .post-info {
+    flex: 1 50%;
+  }
+  .post-tags {
+    flex: 1 50%;
+    list-style: none;
+    display: flex;
+    align-content: start;
+    justify-content: right;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    gap: 0.2em;
+  }
+
+  .post-tags>li {
+    width: auto;
+    padding: 0 5px;
+    background-color: var(--accent-light);
+    border-radius: 10px;
+  }
+
+  .posts-list>li>a:hover .title,
+  .posts-list>li>a:hover .date {
     color: rgb(var(--accent));
   }
-  ul a:hover img {
+
+  .posts-list a:hover img {
     box-shadow: var(--box-shadow);
   }
   @media (max-width: 720px) {
-    ul {
+    .posts-list {
       gap: 0.5em;
     }
-    ul li {
+    .posts-list>li {
       width: 100%;
-      text-align: center;
     }
-    ul li:first-child {
+
+    .posts-list>li:first-child {
       margin-bottom: 0;
     }
-    ul li:first-child .title {
+    .posts-list>li:first-child .title {
       font-size: 1.563em;
     }
   }
