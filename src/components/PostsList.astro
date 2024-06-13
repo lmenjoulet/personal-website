@@ -1,6 +1,8 @@
 ---
 import Image from "astro/components/Image.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+
+const MAX_TAGS = 3;
 const { posts } = Astro.props;
 ---
 
@@ -25,12 +27,11 @@ const { posts } = Astro.props;
                   </time>
                 </div>
                 <ul class="post-tags">
-                  { post.data.tags
-                    .slice(0,3)
-                      .map((tag: string, i: number, arr: string[]) => 
-                      <li>
-                        #{tag}{i==arr.length - 1 ? "...": ""}
-                      </li>)}
+                  {post.data.tags
+                    .slice(0, MAX_TAGS + 1)
+                    .map((tag: string, i: number, arr: string[]) => (
+                      <li>#{i == MAX_TAGS ? "..." : tag}</li>
+                    ))}
                 </ul>
               </div>
             </a>
@@ -53,28 +54,28 @@ const { posts } = Astro.props;
     margin: 0;
     padding: 0;
   }
-  .posts-list>li {
+  .posts-list > li {
     width: calc(50% - 1rem);
   }
-  .posts-list>li * {
+  .posts-list > li * {
     text-decoration: none;
     transition: 0.2s ease;
   }
-  .posts-list>li:first-child {
+  .posts-list > li:first-child {
     width: 100%;
     margin-bottom: 1rem;
   }
-  .posts-list>li:first-child img {
+  .posts-list > li:first-child img {
     width: 100%;
   }
-  .posts-list>li:first-child .title {
+  .posts-list > li:first-child .title {
     font-size: 2.369rem;
   }
-  .posts-list>li img {
+  .posts-list > li img {
     margin-bottom: 0.5rem;
     border-radius: 12px;
   }
-  .posts-list>li a {
+  .posts-list > li a {
     display: block;
   }
   .title {
@@ -95,6 +96,7 @@ const { posts } = Astro.props;
     flex: 1 50%;
   }
   .post-tags {
+    overflow: hidden;
     flex: 1 50%;
     list-style: none;
     display: flex;
@@ -105,15 +107,17 @@ const { posts } = Astro.props;
     gap: 0.2em;
   }
 
-  .post-tags>li {
-    width: auto;
+  .post-tags li {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     padding: 0 5px;
     background-color: var(--accent-light);
     border-radius: 10px;
   }
 
-  .posts-list>li>a:hover .title,
-  .posts-list>li>a:hover .date {
+  .posts-list > li > a:hover .title,
+  .posts-list > li > a:hover .date {
     color: rgb(var(--accent));
   }
 
@@ -124,14 +128,14 @@ const { posts } = Astro.props;
     .posts-list {
       gap: 0.5em;
     }
-    .posts-list>li {
+    .posts-list > li {
       width: 100%;
     }
 
-    .posts-list>li:first-child {
+    .posts-list > li:first-child {
       margin-bottom: 0;
     }
-    .posts-list>li:first-child .title {
+    .posts-list > li:first-child .title {
       font-size: 1.563em;
     }
   }
